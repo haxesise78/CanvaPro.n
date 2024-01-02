@@ -1,0 +1,25 @@
+!function(){"use strict";let e=(e,t,i)=>{var l,n,r,s,o,a;switch(t){case"tablet":return null!==(n=null!==(l=null==e?void 0:e.tablet)&&void 0!==l?l:null==e?void 0:e.desktop)&&void 0!==n?n:i;case"mobile":return null!==(o=null!==(s=null!==(r=null==e?void 0:e.mobile)&&void 0!==r?r:null==e?void 0:e.tablet)&&void 0!==s?s:null==e?void 0:e.desktop)&&void 0!==o?o:i;default:return null!==(a=null==e?void 0:e.desktop)&&void 0!==a?a:i}};function t(e,t,i){return t in e?Object.defineProperty(e,t,{value:i,enumerable:!0,configurable:!0,writable:!0}):e[t]=i,e}class i extends GP.Component{constructor(){super(),t(this,"isSafari",!1),t(this,"init",()=>{let t=this.querySelector(".p-description-show-more"),i=this.getState("setting"),l=this.getCurrentDevice(),n=this.getState("collapseStyle"),r=e(null==i?void 0:i.hasLineClamp,l),s=this.querySelector(".p-description-wrapper");this.isSafari=-1!=navigator.userAgent.indexOf("Safari")&&-1==navigator.userAgent.indexOf("Chrome"),r&&(null==s||s.setAttribute("style",this.getStyleOfObject(n)),t&&this.initCollapseEvent(t),this.handleShowMoreButton()),this.appendStyle()}),t(this,"replaceUnit",e=>e.replaceAll("px","").replaceAll("rem","").replaceAll("em","")),t(this,"handleShowMoreButton",()=>{let t=this.getState("setting"),i=this.querySelector(".p-description-show-more"),l=this.querySelector(".p-description-wrapper");if(l&&i){let n=null==l?void 0:l.scrollHeight,r=null==l?void 0:l.clientHeight,s=this.getCurrentDevice(),o=e(null==t?void 0:t.lineClamp,s),a=window.getComputedStyle(l).getPropertyValue("line-height"),p=Math.round((null!=n?n:0)/parseInt(this.replaceUnit(a))),h=this.isSafari?o&&o<p:r<n;o&&h?(i.style.display="inline-block",this.handleLineClampSafari(!1)):i.style.display="none"}}),t(this,"handleLineClampSafari",t=>{if(!this.isSafari)return;let i=this.querySelector(".p-description-wrapper"),l=this.getState("setting");if(i){if(i.style.webkitLineClamp="unset",t){i.style.height="unset",i.removeAttribute("data-browser");return}let n=window.getComputedStyle(i).getPropertyValue("line-height"),r=null==i?void 0:i.scrollHeight,s=this.getCurrentDevice(),o=e(null==l?void 0:l.lineClamp,s),a=Math.round((null!=r?r:0)/parseInt(this.replaceUnit(n)));if(o&&o<a){let e=parseInt(this.replaceUnit(n))*o;i.style.height=`${e}px`,i.setAttribute("data-browser","safari")}else i.removeAttribute("data-browser")}}),t(this,"initCollapseEvent",e=>{let t=this.querySelector(".p-description-wrapper"),i=this.getState("setting"),l=this.getState("defaultStyle"),n=this.getState("collapseStyle");e.addEventListener("click",r=>{r.preventDefault();let s=e.innerHTML.includes(i.viewMoreText);s?null==t||t.setAttribute("style",this.getStyleOfObject(l)):null==t||t.setAttribute("style",this.getStyleOfObject(n)),this.handleLineClampSafari(s);let o=this.getTemplate(s);e.innerHTML=o})}),t(this,"getTemplate",e=>{let t=this.getState("setting");return`${e?t.viewLessText:t.viewMoreText} ${(null==t?void 0:t.enableViewMoreIcon)?`
+      <svg
+      style="display: inline-block; margin-left: 1px;"
+      class="ml-1 inline-block"
+      height="1em"
+      width="1em"
+      viewBox="0 0 22 12"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      ${e?`<path
+              d="M0.292893 10.2929C-0.0976311 10.6834 -0.0976311 11.3166 0.292893 11.7071C0.683417 12.0976 1.31658 12.0976 1.70711 11.7071L0.292893 10.2929ZM11 1L11.7071 0.292893C11.3166 -0.0976311 10.6834 -0.0976311 10.2929 0.292893L11 1ZM20.2929 11.7071C20.6834 12.0976 21.3166 12.0976 21.7071 11.7071C22.0976 11.3166 22.0976 10.6834 21.7071 10.2929L20.2929 11.7071ZM1.70711 11.7071L11.7071 1.70711L10.2929 0.292893L0.292893 10.2929L1.70711 11.7071ZM10.2929 1.70711L20.2929 11.7071L21.7071 10.2929L11.7071 0.292893L10.2929 1.70711Z"
+              fill="currentColor"
+            />`:`<path
+              d="M1.70711 0.292893C1.31658 -0.0976311 0.683417 -0.0976311 0.292893 0.292893C-0.0976311 0.683417 -0.0976311 1.31658 0.292893 1.70711L1.70711 0.292893ZM11 11L10.2929 11.7071C10.6834 12.0976 11.3166 12.0976 11.7071 11.7071L11 11ZM21.7071 1.70711C22.0976 1.31658 22.0976 0.683417 21.7071 0.292893C21.3166 -0.0976311 20.6834 -0.0976311 20.2929 0.292893L21.7071 1.70711ZM0.292893 1.70711L10.2929 11.7071L11.7071 10.2929L1.70711 0.292893L0.292893 1.70711ZM11.7071 11.7071L21.7071 1.70711L20.2929 0.292893L10.2929 10.2929L11.7071 11.7071Z"
+              fill="currentColor"
+            />`}
+    </svg> `:""}`}),t(this,"getStyleOfObject",e=>{let t=Object.keys(e),i="";return t.forEach(t=>{i+=`${t}: ${e[t]};`}),i}),t(this,"getCurrentDevice",()=>window.innerWidth<768?"mobile":window.innerWidth>=768&&window.innerWidth<1024?"tablet":"desktop"),t(this,"appendStyle",()=>{if(!this.isSafari){let e=document.createElement("style");e.textContent=`
+        .gp-p-description-text > *:not(ol):not(ul) {
+          display: inline !important;
+        }
+        .gp-p-description-text > *:not(ol):not(ul)::after {
+          content: "\\A";
+          white-space: pre;
+        }`,this.prepend(e)}}),this.init()}}customElements.get("gp-product-description")||customElements.define("gp-product-description",i)}();
